@@ -2,4 +2,4 @@
 
 Hello World with AWS Step Functions.
 
-- [DeleteDatabases](DeleteDatabase)
+- [delete-databases](delete-databases)
