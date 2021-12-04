@@ -1,0 +1,26 @@
+name: terraform
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        state:
+          - helloworld
+    defaults:
+      run:
+        working-directory: ${{ matrix.state }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+    - run: terraform fmt -check
+    - run: terraform init -backend=false
+    - run: terraform validate
