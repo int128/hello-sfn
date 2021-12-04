@@ -1,0 +1,35 @@
+{
+  "Comment": "A description of my state machine",
+  "StartAt": "ListInstances",
+  "States": {
+    "ListInstances": {
+      "Type": "Task",
+      "Parameters": {},
+      "Resource": "arn:aws:states:::aws-sdk:rds:describeDBInstances",
+      "Next": "ForEachInstance",
+      "ResultPath": "$.ListInstances"
+    },
+    "ForEachInstance": {
+      "Type": "Map",
+      "End": true,
+      "Iterator": {
+        "StartAt": "DeleteInstance",
+        "States": {
+          "DeleteInstance": {
+            "Type": "Task",
+            "End": true,
+            "Parameters": {
+              "DbInstanceIdentifier.$": "$.Instance.DbInstanceIdentifier",
+              "SkipFinalSnapshot": "true"
+            },
+            "Resource": "arn:aws:states:::aws-sdk:rds:deleteDBInstance"
+          }
+        }
+      },
+      "ItemsPath": "$.ListInstances.DbInstances",
+      "Parameters": {
+        "Instance.$": "$$.Map.Item.Value"
+      }
+    }
+  }
+}
