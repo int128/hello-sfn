@@ -20,6 +20,7 @@ jobs:
         state:
           - helloworld
           - delete-databases
+          - fargate-task
     defaults:
       run:
         working-directory: ${{ matrix.state }}
