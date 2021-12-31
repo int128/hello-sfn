@@ -4,3 +4,4 @@ Hello World of AWS Step Functions with Terraform.
 
 - [helloworld](helloworld)
 - [delete-databases](delete-databases)
+- [fargate-task](fargate-task)
